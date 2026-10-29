@@ -13,6 +13,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* colors used all over the site - change them here */
     :root {
       --deep:      #060c18;
       --sky:       #2a7fc4;
@@ -33,6 +34,7 @@
       min-height: 100vh;
     }
 
+    /* the moving star background sits behind everything */
     #bg-canvas {
       position: fixed;
       inset: 0;
@@ -44,6 +46,7 @@
 
     .above { position: relative; z-index: 1; }
 
+    /* spite castle banner at the very top */
     .sc-banner {
       position: relative;
       display: flex;
@@ -89,6 +92,7 @@
       .sc-banner-text { font-size: 12.5px; }
     }
 
+    /* top navigation bar */
     .nav {
       background: rgba(6, 12, 24, 0.92);
       border-bottom: 1px solid rgba(79, 179, 240, 0.18);
@@ -190,6 +194,7 @@
 
     .nav-shop:hover { background: #ffd84a; }
 
+    /* mobile menu button and drawer */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -312,6 +317,7 @@
       100% { background-position: -100% 0; }
     }
 
+    /* big logo area at the top */
     .hero {
       position: relative;
       padding: 64px 24px 72px;
@@ -425,6 +431,7 @@
       margin-bottom: 20px;
     }
 
+    /* the game cards under the logo */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -528,6 +535,7 @@
       border-top: 1px solid rgba(79, 179, 240, 0.15);
     }
 
+    /* each tab's content, only the active one shows */
     .tab-panel {
       display: none;
       opacity: 0;
@@ -662,6 +670,7 @@
       background: rgba(79, 179, 240, 0.06);
     }
 
+    /* games tab */
     .gd-inner { display: flex; align-items: stretch; }
 
     .gd-thumb {
@@ -742,6 +751,7 @@
       transform: translateY(-3px);
     }
 
+    /* comics tab */
     .comic-icon {
       width: 56px;
       height: 56px;
@@ -836,6 +846,7 @@
 
     .shop-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
 
+    /* shop tab */
     .shop-cat {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(79, 179, 240, 0.16);
@@ -953,6 +964,7 @@
 
     .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
+    /* updates tab */
     .blog-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1.5px solid rgba(79, 179, 240, 0.12);
@@ -1014,6 +1026,7 @@
 
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
+    /* about tab */
     .about-card {
       background: rgba(255, 255, 255, 0.04);
       border: 1.5px solid rgba(79, 179, 240, 0.15);
@@ -1059,6 +1072,7 @@
       margin: 0 auto;
     }
 
+    /* contact tab */
     .contact-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 24px; }
 
     .contact-card {
@@ -1138,6 +1152,7 @@
       text-overflow: ellipsis;
     }
 
+    /* follow us section above the footer */
     .nl {
       position: relative;
       z-index: 1;
@@ -1210,6 +1225,7 @@
       transform: translateY(-2px) scale(1.08);
     }
 
+    /* footer */
     footer {
       position: relative;
       z-index: 1;
@@ -1287,6 +1303,7 @@
       stroke-linejoin: round;
     }
 
+    /* smaller screens and phones */
     @media (max-width: 860px) {
       .nav-tabs                { display: none; }
       .nav-right .nav-socials  { display: none; }
@@ -1324,6 +1341,7 @@
       .soc-item                     { min-width: 0; }
     }
 
+    /* artists page styles - not used right now since that tab is hidden */
     .artists-error {
       background: rgba(239,68,68,0.08);
       border: 1.5px solid rgba(239,68,68,0.2);
@@ -1847,6 +1865,7 @@
       .collage-grid-large { grid-auto-rows: 150px; }
     }
 
+    /* floating character pictures on the sides */
     .floater {
       position: absolute;
       pointer-events: none;
@@ -1910,10 +1929,12 @@
 </head>
 <body>
 
+<!-- star background -->
 <canvas id="bg-canvas"></canvas>
 
 <div class="above">
 
+  <!-- spite castle banner, the x closes it -->
   <div class="sc-banner" id="sc-banner" role="region" aria-label="Spite Castle announcement">
     <img src="spitecastle_logo.png" alt="Spite Castle">
     <div class="sc-banner-text"><span>Now open:</span> the doors of Spite Castle are unlocked. Play the board game of betrayal and supernatural shenanigans!</div>
@@ -1921,6 +1942,7 @@
     <button class="sc-banner-close" type="button" aria-label="Close banner" onclick="document.getElementById('sc-banner').style.display='none'">&times;</button>
   </div>
 
+  <!-- top menu -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
 
     <a href="#" class="nav-logo" onclick="goHome(); return false;" aria-label="Simeck Entertainment home — back to top">
@@ -1969,6 +1991,7 @@
     </div>
   </nav>
 
+  <!-- menu for phones -->
   <div class="mobile-menu" id="mobile-menu">
     <button class="mob-tab active" data-tab="games">🎮 Games</button>
     <button class="mob-tab" data-tab="comics">📖 Comics</button>
@@ -1991,6 +2014,7 @@
     </div>
   </div>
 
+  <!-- logo and the two big buttons -->
   <header class="hero" role="banner">
     <div class="floater floater-butters" aria-hidden="true">
       <img src="bearbuttersjp.png" alt="">
@@ -2069,6 +2093,7 @@
       <img src="duchess.png" alt="">
     </div>
 
+    <!-- GAMES tab -->
     <div class="tab-panel active" id="panel-games" role="tabpanel" aria-label="Games">
       <div class="sec-label">Deep Dive</div>
       <h2 class="sec-title">All Our Games ✦</h2>
@@ -2113,6 +2138,7 @@
       </div>
     </div>
 
+    <!-- COMICS tab -->
     <div class="tab-panel" id="panel-comics" role="tabpanel" aria-label="Comics">
       <div class="sec-label">Comics</div>
       <h2 class="sec-title">Stories Worth Reading ✦</h2>
@@ -2153,6 +2179,7 @@
       </div>
     </div>
 
+    <!-- SHOP tab -->
     <div class="tab-panel" id="panel-shop" role="tabpanel" aria-label="Shop">
       <div class="sec-label">The Shop</div>
       <h2 class="sec-title">Bring the Magic Home ✦</h2>
@@ -2239,6 +2266,7 @@
       </div>
     </div>
 
+    <!-- UPDATES tab -->
     <div class="tab-panel" id="panel-updates" role="tabpanel" aria-label="Blog and Updates">
       <div class="sec-label">Blog &amp; Updates</div>
       <h2 class="sec-title">Latest from the Studio ✦</h2>
@@ -2284,6 +2312,7 @@
       </div>
     </div>
 
+    <!-- ABOUT tab -->
     <div class="tab-panel" id="panel-about" role="tabpanel" aria-label="About Us">
       <div class="sec-label">About Us</div>
       <h2 class="sec-title">Who We Are ✦</h2>
@@ -2311,6 +2340,7 @@
       </div>
     </div>
 
+    <!-- CONTACT tab -->
     <div class="tab-panel" id="panel-contact" role="tabpanel" aria-label="Contact Us">
       <div class="sec-label">Get in Touch</div>
       <h2 class="sec-title">Contact Us ✦</h2>
@@ -2366,6 +2396,7 @@
 
   </div>
 
+  <!-- follow us on social media -->
   <section class="nl" aria-labelledby="nl-heading">
     <h2 id="nl-heading">Follow the Adventure ✦</h2>
     <p>Game news, comic updates, shop drops, and behind-the-scenes fun — find us on social media.</p>
@@ -2378,6 +2409,7 @@
     </div>
   </section>
 
+  <!-- footer -->
   <footer role="contentinfo">
     <div class="footer-inner">
       <div class="footer-grid">
@@ -2433,6 +2465,7 @@
 
 <script>
 
+  // shows the tab you click and hides the others
   function switchTab(id) {
 
     document.querySelectorAll('.nav-tab').forEach(t => {
@@ -2469,6 +2502,7 @@
     document.getElementById('ham-btn').setAttribute('aria-expanded', 'false');
   }
 
+  // logo click: back to the first tab and the top of the page
   function goHome() {
     switchTab('games');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2487,6 +2521,7 @@
     if (first) first.classList.add('visible');
   }));
 
+  // phone menu open and close
   const hamBtn     = document.getElementById('ham-btn');
   const mobileMenu = document.getElementById('mobile-menu');
 
@@ -2496,6 +2531,7 @@
     hamBtn.setAttribute('aria-expanded', isOpen);
   });
 
+  // star background animation
   const canvas = document.getElementById('bg-canvas');
   const ctx    = canvas.getContext('2d');
 
@@ -2505,11 +2541,13 @@
   let shooters = [];
   let lastShot = 0;
 
+  // keep the background the same size as the window
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = Math.max(document.body.scrollHeight, window.innerHeight);
   }
 
+  // make a twinkling star
   function mkStar() {
     return {
       x:    Math.random() * W,
@@ -2524,6 +2562,7 @@
     };
   }
 
+  // make a soft colored cloud
   function mkNebula() {
     return {
       x:     Math.random() * W,
@@ -2538,6 +2577,7 @@
     };
   }
 
+  // make a shooting star
   function mkShooter() {
     const angle = (Math.random() * 25 + 8) * Math.PI / 180;
     const speed = 6 + Math.random() * 8;
@@ -2551,12 +2591,14 @@
     };
   }
 
+  // set everything up when the page loads
   function init() {
     resize();
     stars   = Array.from({ length: 260 }, mkStar);
     nebulae = Array.from({ length: 8 },  mkNebula);
   }
 
+  // runs every frame to paint the background
   function draw(timestamp) {
 
     ctx.clearRect(0, 0, W, H);
