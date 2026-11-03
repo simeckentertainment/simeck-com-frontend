@@ -728,6 +728,14 @@
       transition: all 0.15s;
     }
 
+    /* official store badges, shown as given - don't stretch or recolor them */
+    .gd-links { align-items: center; }
+    .store-badge { display: inline-flex; align-items: center; }
+    .store-badge img { display: block; width: auto; }
+    .store-badge-play img { height: 72px; margin: -12px -4px; }
+    .store-badge-steam { padding: 0 6px; }
+    .store-badge-steam img { height: 30px; }
+    .store-badge:hover img { opacity: 0.85; }
     .gd-link-off { opacity: 0.45; pointer-events: none; cursor: default; }
     .gd-link:hover { background: rgba(79, 179, 240, 0.2); }
 
@@ -1321,6 +1329,7 @@
     .footer-legal   { display: flex; gap: 14px; }
     .footer-legal a { font-size: 11px; color: rgba(255, 255, 255, 0.18); text-decoration: none; }
     .footer-legal a:hover { color: rgba(255, 255, 255, 0.5); }
+    .footer-legal-note { font-size: 10.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.28); max-width: 760px; }
     .footer-powered { font-size: 11px; color: rgba(255, 255, 255, 0.14); }
 
     .icon {
@@ -2136,8 +2145,12 @@
               <div class="gd-title">Fat Butters' Jetpack Ride</div>
               <p class="gd-desc">A gyroscopically-controlled 2.5D mobile adventure starring Fat Butters, the world's most enthusiastic (and rotund) cat. Tilt your phone to navigate obstacles, collect power-ups, and blast through colorful worlds. Simple to pick up, surprisingly deep.</p>
               <div class="gd-links">
-                <a href="https://play.google.com/store/apps/details?id=com.SimeckEntertainment.FatButtersJetpackRide&hl=en_US" target="_blank" rel="noopener noreferrer" class="gd-link">Google Play</a>
-                <a href="https://store.steampowered.com/app/4567140/Fat_Butters_Jetpack_Ride/" target="_blank" rel="noopener noreferrer" class="gd-link">Steam</a>
+                <a href="https://play.google.com/store/apps/details?id=com.SimeckEntertainment.FatButtersJetpackRide&hl=en_US" target="_blank" rel="noopener noreferrer" class="store-badge store-badge-play" aria-label="Get it on Google Play">
+                  <img src="google-play-badge.png" alt="Get it on Google Play">
+                </a>
+                <a href="https://store.steampowered.com/app/4567140/Fat_Butters_Jetpack_Ride/" target="_blank" rel="noopener noreferrer" class="store-badge store-badge-steam" aria-label="Fat Butters' Jetpack Ride on Steam">
+                  <img src="steam-logo-white.png" alt="Steam">
+                </a>
                 <a href="https://shop.simeck.com/pages/fat-butters-jetpack-ride" target="_blank" rel="noopener noreferrer" class="gd-link">Merch</a>
               </div>
             </div>
@@ -2451,6 +2464,9 @@
           <a href="https://shop.simeck.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
         </div>
         <p class="footer-powered">Powered by Shopify</p>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-legal-note">Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries. Google Play and the Google Play logo are trademarks of Google LLC.</p>
       </div>
     </div>
   </footer>
