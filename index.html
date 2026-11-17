@@ -1996,6 +1996,7 @@
 
     <div class="nav-tabs" role="tablist">
       <button class="nav-tab active" role="tab" aria-selected="true"  data-tab="games">Games</button>
+      <button class="nav-tab"        role="tab" aria-selected="false" data-tab="artists">Artists</button>
       <button class="nav-tab"        role="tab" aria-selected="false" data-tab="shop">Shop</button>
       <button class="nav-tab"        role="tab" aria-selected="false" data-tab="updates">Updates</button>
       <button class="nav-tab"        role="tab" aria-selected="false" data-tab="about">About</button>
@@ -2038,6 +2039,7 @@
   <!-- menu for phones -->
   <div class="mobile-menu" id="mobile-menu">
     <button class="mob-tab active" data-tab="games">🎮 Games</button>
+    <button class="mob-tab" data-tab="artists">🎨 Artists</button>
     <button class="mob-tab" data-tab="shop">🛍️ Shop</button>
     <button class="mob-tab" data-tab="updates">📰 Updates</button>
     <button class="mob-tab" data-tab="about">ℹ️ About</button>
@@ -2190,6 +2192,13 @@
         </div>
 
       </div>
+    </div>
+
+    <!-- ARTISTS tab -->
+    <div class="tab-panel" id="panel-artists" role="tabpanel" aria-label="Artists">
+      <div class="sec-label">The Team</div>
+      <h2 class="sec-title">Our Artists ✦</h2>
+      <div id="artists-container"></div>
     </div>
 
     <!-- SHOP tab -->
@@ -2462,6 +2471,7 @@
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
+            <li><button onclick="switchTab('artists')">Our Artists</button></li>
             <li><button onclick="switchTab('about')">About Us</button></li>
             <li><button onclick="switchTab('updates')">Blog &amp; Updates</button></li>
             <li><button onclick="switchTab('contact')">Contact Us</button></li>
@@ -2553,6 +2563,489 @@
     hamBtn.classList.toggle('open', isOpen);
     hamBtn.setAttribute('aria-expanded', isOpen);
   });
+
+  // ARTISTS TAB
+  // The roster below is the whole crew. Portfolio pieces, bios and links
+  // come from artists.json, which the sync script on the server publishes
+  // from each person's Website_Portfolio folder in the Dropbox.
+
+  // where the sync script publishes its output (change this if it moves)
+  const ARTISTS_DATA_URL = 'https://dropbox.simeck.com/public/artists.json';
+
+  // names that show in the team row instead of the artist row
+  const TEAM_NAMES = ['Carl Mineck', 'Randy Simon', 'Myra', 'Dax', 'Blue Makara', 'Dottie', 'Kisami'];
+
+  const ROSTER = [
+    {
+      "id": "ben",
+      "name": "Ben",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#2a4a1a,#4a8a2a)"
+    },
+    {
+      "id": "blue-makara",
+      "name": "Blue Makara",
+      "role": "Production Assistant · Lead Artist",
+      "bio": "Full-time artist, part time human. Illustrator and Character Designer.",
+      "avatar": "peep-b.png",
+      "color": "linear-gradient(135deg,#c45a25,#e88a4a)",
+      "links": {
+        "linktree": "https://linktr.ee/bluemakara"
+      }
+    },
+    {
+      "id": "carl-mineck",
+      "name": "Carl Mineck",
+      "role": "Co-Founder · Talent Manager",
+      "color": "linear-gradient(135deg,#5a2eb0,#7a50cc)"
+    },
+    {
+      "id": "crystal",
+      "name": "Crystal",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a6a6a,#2ab8b8)"
+    },
+    {
+      "id": "dax",
+      "name": "Dax",
+      "role": "Lead Sound Designer · Merch Store Manager",
+      "bio": "Music producer, sound designer and audio engineer based in NYC.",
+      "avatar": "pinklogo.png",
+      "color": "linear-gradient(135deg,#1a8a3a,#3ac464)",
+      "links": {
+        "linktree": "https://linktr.ee/daxonthetrax"
+      }
+    },
+    {
+      "id": "dottie",
+      "name": "Dottie",
+      "role": "Social Media Director"
+    },
+    {
+      "id": "drake",
+      "name": "Drake",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#2a1a6a,#4a2ab8)"
+    },
+    {
+      "id": "hannah",
+      "name": "Hannah",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a1a2a,#b82a4a)"
+    },
+    {
+      "id": "jano",
+      "name": "Jano",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a2a1a,#b8502a)"
+    },
+    {
+      "id": "kevin",
+      "name": "Kevin",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a8a3a,#3ac464)"
+    },
+    {
+      "id": "kisami",
+      "name": "Kisami",
+      "role": "Web Developer · Programmer",
+      "color": "linear-gradient(135deg,#5a1a6a,#9a2ab8)"
+    },
+    {
+      "id": "mandy",
+      "name": "Mandy",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a4a1a,#b88a2a)"
+    },
+    {
+      "id": "michael-f",
+      "name": "Michael F.",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a6a4a,#2ab882)"
+    },
+    {
+      "id": "michael-l",
+      "name": "Michael L.",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a2a6a,#2a4ab8)"
+    },
+    {
+      "id": "michael-r",
+      "name": "Michael R.",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#3a6a6a,#5aacac)"
+    },
+    {
+      "id": "moe",
+      "name": "Moe",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a4a6a,#2a7ab8)"
+    },
+    {
+      "id": "myra",
+      "name": "Myra",
+      "role": "Web and Data Developer · Programmer",
+      "avatar": "myra-avatar.png",
+      "color": "linear-gradient(135deg,#8a1a3a,#cc3a5a)"
+    },
+    {
+      "id": "nneka",
+      "name": "Nneka",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a1a1a,#b82a2a)"
+    },
+    {
+      "id": "randy-simon",
+      "name": "Randy Simon",
+      "role": "Co-Founder · Technical Director · Programmer",
+      "color": "linear-gradient(135deg,#2a7fc4,#4fb3f0)"
+    },
+    {
+      "id": "rey",
+      "name": "Rey",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a3a4a,#b8607a)"
+    },
+    {
+      "id": "rob",
+      "name": "Rob",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a5a1a,#b89a2a)"
+    },
+    {
+      "id": "ronald",
+      "name": "Ronald",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#4a1a6a,#822ab8)"
+    },
+    {
+      "id": "sabrina",
+      "name": "Sabrina",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#1a5a6a,#2a9ab8)"
+    },
+    {
+      "id": "samantha",
+      "name": "Samantha",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a1a3a,#b82a6a)"
+    },
+    {
+      "id": "tifany",
+      "name": "Tifany",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#6a1a5a,#b82a9a)"
+    },
+    {
+      "id": "tj",
+      "name": "TJ",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#3a6a1a,#6ab82a)"
+    },
+    {
+      "id": "willie",
+      "name": "Willie",
+      "role": "Artist",
+      "color": "linear-gradient(135deg,#3a3a6a,#6a6ab8)"
+    }
+  ];
+
+  // collage size keywords turn into grid spans
+  const SIZE_MAP = { small: [1, 1], wide: [2, 1], tall: [1, 2], large: [2, 2] };
+
+  // no one's collage shows more than this many pieces
+  const MAX_PIECES = 15;
+
+  let allArtists = ROSTER.map(a => ({ ...a, pieces: [] }));
+  let artistsStarted = false;
+
+  // make text safe before it goes into the page
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  // only let normal web links through
+  function safeUrl(u) {
+    return /^(https?:\/\/|mailto:)/i.test(String(u || '')) ? u : '';
+  }
+
+  function slugify(name) {
+    return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function getInitials(name) {
+    return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  }
+
+  function avatarHTML(artist, size) {
+    const cls = size === 'bubble' ? 'artist-bubble-avatar' : 'artist-avatar-lg';
+    if (artist.avatar) {
+      return `<div class="${cls}"><img src="${esc(artist.avatar)}" alt="${esc(artist.name)}"></div>`;
+    }
+    const bg = artist.color || 'linear-gradient(135deg, var(--sky), var(--bright))';
+    return `<div class="${cls}" style="background:${bg}">${esc(getInitials(artist.name))}</div>`;
+  }
+
+  function linkLabel(key) {
+    const labels = { instagram: 'Instagram', twitter: 'Twitter / X', tiktok: 'TikTok',
+                     youtube: 'YouTube', portfolio: 'Portfolio', website: 'Website',
+                     artstation: 'ArtStation', behance: 'Behance', linktree: 'Linktree',
+                     beatstars: 'BeatStars' };
+    return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
+  }
+
+  // turn a file path from artists.json into a full address on the Dropbox server
+  function mediaUrl(src) {
+    try { return new URL(src, ARTISTS_DATA_URL).href; } catch (e) { return ''; }
+  }
+
+  // mix the published data into the roster
+  function mergeArtists(published) {
+    const byKey = {};
+    allArtists.forEach(a => { byKey[a.id] = a; byKey[slugify(a.name)] = a; });
+
+    // roster uses first names for most people, so a published "Rey Doe"
+    // can still match "Rey" as long as only one person has that first name
+    const firstNames = {};
+    allArtists.forEach(a => {
+      const first = slugify(a.name.split(' ')[0]);
+      (firstNames[first] = firstNames[first] || []).push(a);
+    });
+
+    (published || []).forEach(p => {
+      if (!p || !p.name) return;
+      const first = firstNames[slugify(p.name.split(' ')[0])];
+      let artist = byKey[p.id] || byKey[slugify(p.name)] || (first && first.length === 1 ? first[0] : null);
+
+      if (p.active === false) {
+        if (artist) allArtists = allArtists.filter(a => a !== artist);
+        return;
+      }
+      if (!artist) {
+        artist = { id: slugify(p.name), name: p.name, role: 'Artist', pieces: [] };
+        allArtists.push(artist);
+      }
+
+      if (p.role) artist.role = p.role;
+      if (p.bio) artist.bio = p.bio;
+      if (p.avatar) artist.avatar = mediaUrl(p.avatar);
+      if (p.links && Object.keys(p.links).length) artist.links = p.links;
+      if (p.contact) artist.contact = p.contact;
+      artist.hasCustomLayout = !!p.hasCustomLayout;
+
+      artist.pieces = (p.pieces || [])
+        .filter(x => x && (x.type === 'image' || x.type === 'video') && x.src)
+        .map(x => ({ type: x.type, size: x.size, name: x.name || '', src: mediaUrl(x.src) }))
+        .filter(x => x.src);
+    });
+  }
+
+  // grab the published data once, then draw
+  async function startArtists() {
+    if (artistsStarted) { showAllArtists(); return; }
+    artistsStarted = true;
+    try {
+      const res = await fetch(ARTISTS_DATA_URL, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('not found');
+      const data = await res.json();
+      mergeArtists(data.artists);
+    } catch (e) {
+      // no published data yet, so the roster shows on its own
+    }
+    showAllArtists();
+  }
+
+  // the main view: team row, divider, artist row
+  function showAllArtists() {
+    const container = document.getElementById('artists-container');
+    container.innerHTML = '';
+
+    const sorted = [...allArtists].sort((a, b) => a.name.localeCompare(b.name));
+    const priority = { 'Randy Simon': 0, 'Carl Mineck': 1 };
+    const team = sorted.filter(a => TEAM_NAMES.includes(a.name))
+      .sort((a, b) => (priority[a.name] ?? 2) - (priority[b.name] ?? 2) || a.name.localeCompare(b.name));
+    const creators = sorted.filter(a => !TEAM_NAMES.includes(a.name));
+
+    const intro = document.createElement('div');
+    intro.className = 'artists-intro';
+    intro.innerHTML = `
+      <div>
+        <h3>Meet the Simeck Crew</h3>
+        <p>Click any bubble to see more.</p>
+      </div>
+      <div class="artists-count">${allArtists.length}<span>Crew Members</span></div>`;
+    container.appendChild(intro);
+
+    if (team.length) container.appendChild(buildBubbleGrid(team));
+
+    if (team.length && creators.length) {
+      const divider = document.createElement('div');
+      divider.className = 'artists-divider';
+      divider.innerHTML = '<span>Artists</span>';
+      container.appendChild(divider);
+    }
+
+    if (creators.length) container.appendChild(buildBubbleGrid(creators));
+  }
+
+  function buildBubbleGrid(list) {
+    const grid = document.createElement('div');
+    grid.className = 'artist-bubble-grid';
+
+    list.forEach(artist => {
+      const bubble = document.createElement('div');
+      bubble.className = 'artist-bubble';
+      bubble.setAttribute('role', 'button');
+      bubble.setAttribute('tabindex', '0');
+      bubble.setAttribute('aria-label', 'View ' + artist.name);
+      bubble.onclick = () => showArtist(artist);
+      bubble.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showArtist(artist); }
+      });
+
+      const count = Math.min(artist.pieces.length, MAX_PIECES);
+      bubble.innerHTML = `
+        <div class="artist-bubble-ring">${avatarHTML(artist, 'bubble')}</div>
+        <div class="artist-bubble-name">${esc(artist.name)}</div>
+        <div class="artist-bubble-role">${esc(artist.role)}</div>
+        ${count ? `<div class="artist-bubble-count">${count} piece${count !== 1 ? 's' : ''}</div>` : ''}`;
+      grid.appendChild(bubble);
+    });
+    return grid;
+  }
+
+  // one person's page: header, then their gallery if they have one
+  function showArtist(artist) {
+    const container = document.getElementById('artists-container');
+    container.innerHTML = '';
+
+    const back = document.createElement('button');
+    back.className = 'artist-back-btn';
+    back.innerHTML = '← All Artists';
+    back.onclick = showAllArtists;
+    container.appendChild(back);
+
+    const links = Object.entries(artist.links || {}).filter(([k, v]) => safeUrl(v))
+      .map(([k, v]) => `<a href="${esc(safeUrl(v))}" target="_blank" rel="noopener noreferrer" class="artist-link">${esc(linkLabel(k))} ↗</a>`)
+      .join('');
+    const contact = safeUrl(artist.contact)
+      ? `<a href="${esc(safeUrl(artist.contact))}" target="_blank" rel="noopener noreferrer" class="artist-link artist-contact-btn">Contact this artist</a>`
+      : '';
+
+    const header = document.createElement('div');
+    header.className = 'artist-header artist-header-single';
+    header.innerHTML = `
+      ${avatarHTML(artist, 'lg')}
+      <div class="artist-meta">
+        <div class="artist-name">${esc(artist.name)}</div>
+        <div class="artist-role">${esc(artist.role)}</div>
+        ${artist.bio ? `<p class="artist-bio">${esc(artist.bio)}</p>` : ''}
+        ${(links || contact) ? `<div class="artist-links">${links}${contact}</div>` : ''}
+      </div>`;
+    container.appendChild(header);
+
+    if (artist.pieces.length) container.appendChild(buildCollage(artist.pieces));
+  }
+
+  // the gallery grid
+  function buildCollage(pieces) {
+    const grid = document.createElement('div');
+    grid.className = 'collage-grid collage-grid-large';
+    const shown = pieces.slice(0, MAX_PIECES);
+
+    shown.forEach((piece, index) => {
+      const [cols, rows] = SIZE_MAP[piece.size] || SIZE_MAP.small;
+      const item = document.createElement('div');
+      item.className = `collage-item col-span-${cols} row-span-${rows}`;
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-label', 'Open ' + (piece.name || 'piece'));
+      item.onclick = () => openLightbox(shown, index);
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(shown, index); }
+      });
+
+      const label = piece.name ? `<div class="collage-item-label">${esc(piece.name)}</div>` : '';
+      item.innerHTML = piece.type === 'video'
+        ? `<video src="${esc(piece.src)}" muted loop playsinline preload="metadata"
+             onmouseenter="this.play()" onmouseleave="this.pause()"></video>${label}
+           <div class="collage-item-video-badge">▶ Video</div>`
+        : `<img src="${esc(piece.src)}" alt="${esc(piece.name)}" loading="lazy">${label}`;
+      grid.appendChild(item);
+    });
+    return grid;
+  }
+
+  // click a piece to see it big and flip through the rest
+  let lightboxPieces = [];
+  let lightboxIndex = 0;
+
+  function openLightbox(pieces, index) {
+    lightboxPieces = pieces;
+    lightboxIndex = index;
+    renderLightbox();
+  }
+
+  function closeLightbox() {
+    const old = document.getElementById('lightbox-overlay');
+    if (old) old.remove();
+    document.removeEventListener('keydown', lightboxKeys);
+  }
+
+  function lightboxStep(delta) {
+    lightboxIndex = (lightboxIndex + delta + lightboxPieces.length) % lightboxPieces.length;
+    renderLightbox();
+  }
+
+  function lightboxKeys(e) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxStep(-1);
+    if (e.key === 'ArrowRight') lightboxStep(1);
+  }
+
+  function renderLightbox() {
+    const old = document.getElementById('lightbox-overlay');
+    if (old) old.remove();
+
+    const piece = lightboxPieces[lightboxIndex];
+    const many = lightboxPieces.length > 1;
+    const overlay = document.createElement('div');
+    overlay.id = 'lightbox-overlay';
+    overlay.className = 'lightbox-overlay';
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+
+    const media = piece.type === 'video'
+      ? `<video src="${esc(piece.src)}" controls autoplay loop></video>`
+      : `<img src="${esc(piece.src)}" alt="${esc(piece.name)}">`;
+
+    overlay.innerHTML = `
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      ${many ? '<button class="lightbox-nav lightbox-prev" aria-label="Previous">&#8249;</button>' : ''}
+      ${many ? '<button class="lightbox-nav lightbox-next" aria-label="Next">&#8250;</button>' : ''}
+      <div class="lightbox-content">
+        ${media}
+        ${piece.name ? `<div class="lightbox-caption">${esc(piece.name)}</div>` : ''}
+        ${many ? `<div class="lightbox-counter">${lightboxIndex + 1} of ${lightboxPieces.length}</div>` : ''}
+      </div>`;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('.lightbox-close').onclick = closeLightbox;
+    const prev = overlay.querySelector('.lightbox-prev');
+    const next = overlay.querySelector('.lightbox-next');
+    if (prev) prev.onclick = () => lightboxStep(-1);
+    if (next) next.onclick = () => lightboxStep(1);
+
+    document.removeEventListener('keydown', lightboxKeys);
+    document.addEventListener('keydown', lightboxKeys);
+  }
+
+  // opening the tab always starts at the full crew view
+  const baseSwitchTab = switchTab;
+  switchTab = function (id) {
+    baseSwitchTab(id);
+    if (id === 'artists') startArtists();
+  };
 
   // star background animation
   const canvas = document.getElementById('bg-canvas');
