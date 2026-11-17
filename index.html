@@ -2795,6 +2795,12 @@
     return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
   }
 
+  // links can be {label,url} lists (from the Dropbox) or {key:url} (roster); make both a list
+  function normLinks(l) {
+    if (Array.isArray(l)) return l.filter(x => x && safeUrl(x.url)).map(x => ({ label: x.label || 'Link', url: x.url }));
+    return Object.entries(l || {}).filter(([k, v]) => safeUrl(v)).map(([k, v]) => ({ label: linkLabel(k), url: v }));
+  }
+
   // turn a file path from artists.json into a full address on the Dropbox server
   function mediaUrl(src) {
     try { return new URL(src, ARTISTS_DATA_URL).href; } catch (e) { return ''; }
@@ -2803,7 +2809,12 @@
   // mix the published data into the roster
   function mergeArtists(published) {
     const byKey = {};
-    allArtists.forEach(a => { byKey[a.id] = a; byKey[slugify(a.name)] = a; });
+    allArtists.forEach(a => {
+      byKey[a.id] = a; byKey[slugify(a.name)] = a;
+      // usernames on the Dropbox are first initial + last name (bmakara)
+      const parts = a.name.trim().split(/\s+/);
+      if (parts.length > 1) byKey[slugify(parts[0][0] + parts[parts.length - 1])] = a;
+    });
 
     // roster uses first names for most people, so a published "Rey Doe"
     // can still match "Rey" as long as only one person has that first name
@@ -2830,7 +2841,13 @@
       if (p.role) artist.role = p.role;
       if (p.bio) artist.bio = p.bio;
       if (p.avatar) artist.avatar = mediaUrl(p.avatar);
-      if (p.links && Object.keys(p.links).length) artist.links = p.links;
+      if (p.links) {
+        const seen = new Set(), merged = [];
+        [...normLinks(p.links), ...normLinks(artist.links)].forEach(x => {
+          if (!seen.has(x.url)) { seen.add(x.url); merged.push(x); }
+        });
+        artist.links = merged;
+      }
       if (p.contact) artist.contact = p.contact;
       artist.hasCustomLayout = !!p.hasCustomLayout;
 
@@ -2926,8 +2943,8 @@
     back.onclick = showAllArtists;
     container.appendChild(back);
 
-    const links = Object.entries(artist.links || {}).filter(([k, v]) => safeUrl(v))
-      .map(([k, v]) => `<a href="${esc(safeUrl(v))}" target="_blank" rel="noopener noreferrer" class="artist-link">${esc(linkLabel(k))} ↗</a>`)
+    const links = normLinks(artist.links)
+      .map(x => `<a href="${esc(safeUrl(x.url))}" target="_blank" rel="noopener noreferrer" class="artist-link">${esc(x.label)} ↗</a>`)
       .join('');
     const contact = safeUrl(artist.contact)
       ? `<a href="${esc(safeUrl(artist.contact))}" target="_blank" rel="noopener noreferrer" class="artist-link artist-contact-btn">Contact this artist</a>`
